@@ -1,0 +1,71 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+my-web/dist/
+my-web/build/
+
+# Environment variables
+.env
+*.env.local
+*.env.production
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Windows
+desktop.ini
+
+# Images (keep essential ones only)
+Wang/
+一路/
+血色浪漫/
+*.jpg
+*.png
+*.jpeg
+*.gif
+
+# Excel files
+*.xlsx
+*.xls
+
+# Python cache
+__pycache__/
+*.pyc
