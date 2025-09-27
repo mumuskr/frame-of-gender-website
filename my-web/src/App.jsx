@@ -280,23 +280,23 @@ const Pricing = () => (
       <div className="grid lg:grid-cols-3 gap-6">
         {[
           {
-            name: "入门版",
+            name: "一天不吃饭版",
             price: "¥0",
-            features: ["开源模板", "基础组件", "社区支持"],
+            features: ["不吃饭", "发脾气", "乱咬人"],
             cta: "免费使用",
             highlighted: false,
           },
           {
-            name: "专业版",
+            name: "2天不吃饭版",
             price: "¥199",
-            features: ["扩展组件", "样式主题包", "优先支持"],
+            features: ["脾气倔", "爱乱叫", "不老实"],
             cta: "立即购买",
             highlighted: true,
           },
           {
-            name: "企业版",
+            name: "一周不吃饭版",
             price: "定制",
-            features: ["按需模块", "品牌定制", "部署支持"],
+            features: ["会用马桶", "会做家务", "听懂人话"],
             cta: "获取报价",
             highlighted: false,
           },
