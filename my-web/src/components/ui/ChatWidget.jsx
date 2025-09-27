@@ -5,7 +5,7 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState([
-    { role: 'ai', content: '汪汪！� 您好！我是 Cici，您专属的AI狗狗助手！有什么可以帮您的吗？🐾 让我陪您一起探索吧！' }
+    { role: 'ai', content: '汪汪！🐾 您好！我是 Cici，您专属的AI狗狗助手！有什么可以帮您的吗？🐾 让我陪您一起探索吧！' }
   ]) // {role:'user'|'ai', content:string}[]
 
   const [isLoading, setIsLoading] = useState(false)
@@ -226,24 +226,27 @@ export default function ChatWidget() {
           bottom: `${position.y}px`,
           cursor: isDragging ? 'grabbing' : 'grab'
         }}
-        className={`fixed z-50 rounded-full p-4 shadow-2xl border border-amber-400/40 bg-gradient-to-r from-amber-500/90 to-orange-600/90 backdrop-blur-lg transition-all duration-300 text-white hover:shadow-amber-500/30 select-none ${
+        className={`fixed z-50 rounded-full p-1 shadow-2xl border-2 border-white/30 bg-gradient-to-r from-white/10 to-white/20 backdrop-blur-lg transition-all duration-300 hover:shadow-lg select-none ${
           isDragging 
-            ? 'scale-110 shadow-amber-500/50 ring-2 ring-amber-400/50' 
+            ? 'scale-110 shadow-lg ring-2 ring-blue-400/50' 
             : 'hover:scale-110'
         } ${isLongPress ? 'animate-pulse' : ''}`}
       >
         {open ? (
-          <X className="h-6 w-6" />
+          <X className="h-6 w-6 text-white" />
         ) : (
           <div className="relative flex items-center justify-center">
-            <span className={`text-2xl ${isDragging ? 'animate-spin' : 'animate-bounce'}`}>
-              {isDragging ? '�' : '�🐱'}
-            </span>
-            <Heart className="h-3 w-3 text-amber-300 absolute -top-1 -right-1 animate-pulse" />
+            {/* Cici 狗狗头像 - 真实照片 */}
+            <img 
+              src="/cici.png" 
+              alt="Cici狗狗" 
+              className={`w-16 h-16 rounded-full object-cover ${isDragging ? 'animate-spin' : 'animate-gentle-bounce'}`}
+            />
+            <Heart className="h-4 w-4 text-pink-400 absolute -top-2 -right-2 animate-pulse" />
             {/* 拖拽提示 */}
             {(showDragTip || (isLongPress && !isDragging)) && (
               <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap animate-fade-in">
-                {isLongPress ? '拖拽移动汪~ 🐾' : '长按可拖拽汪~ �'}
+                {isLongPress ? '拖拽移动汪~ 🐾' : '长按可拖拽汪~ 🐕'}
               </div>
             )}
           </div>
@@ -262,7 +265,7 @@ export default function ChatWidget() {
           {/* 头部 */}
           <div className="p-4 border-b border-white/10">
             <h3 className="font-medium text-white flex items-center gap-2">
-              <span className="text-lg">�</span>
+              <img src="/cici.png" alt="Cici" className="w-8 h-8 rounded-full object-cover" />
               <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Cici AI助手</span>
               <span className="text-sm">💕</span>
             </h3>
@@ -298,9 +301,9 @@ export default function ChatWidget() {
                 <div className="bg-gradient-to-r from-amber-100/10 to-orange-100/10 text-gray-200 border border-amber-300/20 rounded-2xl px-4 py-2">
                   <div className="flex items-center gap-2">
                     <div className="flex space-x-1">
-                      <span className="animate-bounce text-lg">🐾</span>
-                      <span className="animate-bounce text-lg" style={{animationDelay: '0.2s'}}>�</span>
-                      <span className="animate-bounce text-lg" style={{animationDelay: '0.4s'}}>💭</span>
+                      <span className="animate-gentle-bounce text-lg">🐾</span>
+                      <img src="/cici.png" alt="Cici" className="w-6 h-6 rounded-full animate-gentle-bounce object-cover" style={{animationDelay: '0.2s'}} />
+                      <span className="animate-gentle-bounce text-lg" style={{animationDelay: '0.4s'}}>💭</span>
                     </div>
                     <span className="text-xs text-pink-300">cici正在思考~</span>
                   </div>
@@ -316,7 +319,7 @@ export default function ChatWidget() {
               onChange={(e) => setInput(e.target.value)}
               disabled={isLoading}
               className="flex-1 bg-white/5 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors disabled:opacity-50"
-              placeholder={isLoading ? "cici正在回复喔~" : "告诉cici您的问题喔~ 🐱"}
+              placeholder={isLoading ? "cici正在回复喔~" : "告诉cici您的问题喔~ 🐕"}
             />
             <button 
               type="submit"
@@ -324,9 +327,9 @@ export default function ChatWidget() {
               className="rounded-xl border border-pink-500/30 bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-2 text-white hover:scale-105 transition-all duration-200 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg hover:shadow-pink-500/25"
             >
               {isLoading ? (
-                <span className="animate-spin">🐱</span>
+                <img src="/cici.png" alt="Cici" className="w-5 h-5 rounded-full animate-spin object-cover" />
               ) : (
-                <span className="text-sm">😺</span>
+                <img src="/cici.png" alt="Cici" className="w-5 h-5 rounded-full object-cover" />
               )}
             </button>
           </form>
