@@ -302,7 +302,7 @@ export default function ChatWidget() {
                       <span className="animate-bounce text-lg" style={{animationDelay: '0.2s'}}>�</span>
                       <span className="animate-bounce text-lg" style={{animationDelay: '0.4s'}}>💭</span>
                     </div>
-                    <span className="text-xs text-pink-300">猫猫正在思考喵~</span>
+                    <span className="text-xs text-pink-300">cici正在思考~</span>
                   </div>
                 </div>
               </div>
@@ -316,7 +316,7 @@ export default function ChatWidget() {
               onChange={(e) => setInput(e.target.value)}
               disabled={isLoading}
               className="flex-1 bg-white/5 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors disabled:opacity-50"
-              placeholder={isLoading ? "猫猫正在回复喔~" : "告诉猫猫您的问题喔~ 🐱"}
+              placeholder={isLoading ? "cici正在回复喔~" : "告诉cici您的问题喔~ 🐱"}
             />
             <button 
               type="submit"
