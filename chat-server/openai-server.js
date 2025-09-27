@@ -9,13 +9,13 @@ const app = express();
 
 // CORS 配置 - 生产环境安全设置
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? [
-        'https://frame-of-gender-website.vercel.app',
-        'https://frame-of-gender-website-git-main-mumuskrs-projects.vercel.app',
-        'https://frame-of-gender-website-639p4x9hg-mumuskrs-projects.vercel.app'
-      ] // 生产环境域名白名单
-    : ['http://localhost:5173', 'http://localhost:3000'], // 开发环境
+  origin: [
+    'https://frame-of-gender-website.vercel.app',
+    'https://frame-of-gender-website-git-main-mumuskrs-projects.vercel.app',
+    'https://frame-of-gender-website-639p4x9hg-mumuskrs-projects.vercel.app',
+    'http://localhost:5173', 
+    'http://localhost:3000'
+  ],
   credentials: true,
   optionsSuccessStatus: 200
 };
