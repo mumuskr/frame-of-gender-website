@@ -130,8 +130,10 @@ export default function ChatWidget() {
 
     try {
       // 调用真实的 OpenAI API - 支持生产环境
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8787';
-      
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://frame-of-gender-website-production.up.railway.app';
+      console.log('🔍 API URL:', apiUrl);
+      console.log('🔍 环境变量 VITE_API_URL:', import.meta.env.VITE_API_URL);
+
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {

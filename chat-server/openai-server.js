@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { OpenAI } from 'openai';
 
-console.log('🚀 启动 OpenAI 聊天服务器...');
+console.log('🚀 启动 OpenAI 聊天服务器... v1.1');
 
 const app = express();
 
