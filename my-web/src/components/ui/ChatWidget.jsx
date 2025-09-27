@@ -5,7 +5,7 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState([
-    { role: 'ai', content: '喵~ 🐱 您好！我是可爱的AI猫猫助手，有什么可以帮您的吗？喵~ 💕' }
+    { role: 'ai', content: '汪汪！� 您好！我是 Cici，您专属的AI狗狗助手！有什么可以帮您的吗？🐾 让我陪您一起探索吧！' }
   ]) // {role:'user'|'ai', content:string}[]
 
   const [isLoading, setIsLoading] = useState(false)
@@ -134,19 +134,51 @@ export default function ChatWidget() {
       console.log('🔍 API URL:', apiUrl);
       console.log('🔍 环境变量 VITE_API_URL:', import.meta.env.VITE_API_URL);
 
-      const response = await fetch(`${apiUrl}/api/chat`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sessionId,
-          message: text,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('网络请求失败')
+      // 重试机制 - 最多重试3次
+      let response;
+      let lastError;
+      
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          console.log(`🔄 尝试第 ${attempt} 次请求...`);
+          
+          // 30秒超时控制
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 30000);
+          
+          response = await fetch(`${apiUrl}/api/chat`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sessionId,
+              message: text,
+            }),
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+          }
+          
+          break; // 成功了就跳出重试循环
+          
+        } catch (err) {
+          lastError = err;
+          console.log(`❌ 第 ${attempt} 次尝试失败:`, err.message);
+          
+          if (attempt < 3) {
+            console.log(`⏳ ${attempt * 2} 秒后重试...`);
+            await new Promise(resolve => setTimeout(resolve, attempt * 2000));
+          }
+        }
+      }
+      
+      if (!response) {
+        throw lastError || new Error('所有重试都失败了');
       }
 
       const data = await response.json()
@@ -161,10 +193,15 @@ export default function ChatWidget() {
     } catch (error) {
       console.error('Chat API 错误:', error)
       
-      // 显示错误信息
-      const errorMessage = error.message === '网络请求失败' 
-        ? '无法连接到服务器，请确保后端服务正在运行。' 
-        : `抱歉，出现了错误: ${error.message}`
+      // 更友好的错误信息
+      let errorMessage = '网络不稳定，请稍后重试 🔄';
+      if (error.name === 'AbortError') {
+        errorMessage = '请求超时，请稍后重试 ⏰';
+      } else if (error.message.includes('Failed to fetch')) {
+        errorMessage = '网络连接失败，请检查网络 🌐';
+      } else if (error.message.includes('HTTP 5')) {
+        errorMessage = '服务器正在唤醒中，请稍后重试 🚀';
+      }
       
       setMessages((m) => [...m, { 
         role: 'ai', 
@@ -177,7 +214,7 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* 可拖拽的猫猫按钮 */}
+      {/* 可拖拽的 Cici 狗狗按钮 */}
       <button
         ref={buttonRef}
         onMouseDown={handleMouseDown}
@@ -189,9 +226,9 @@ export default function ChatWidget() {
           bottom: `${position.y}px`,
           cursor: isDragging ? 'grabbing' : 'grab'
         }}
-        className={`fixed z-50 rounded-full p-4 shadow-2xl border border-pink-400/40 bg-gradient-to-r from-pink-500/90 to-purple-600/90 backdrop-blur-lg transition-all duration-300 text-white hover:shadow-pink-500/30 select-none ${
+        className={`fixed z-50 rounded-full p-4 shadow-2xl border border-amber-400/40 bg-gradient-to-r from-amber-500/90 to-orange-600/90 backdrop-blur-lg transition-all duration-300 text-white hover:shadow-amber-500/30 select-none ${
           isDragging 
-            ? 'scale-110 shadow-pink-500/50 ring-2 ring-pink-400/50' 
+            ? 'scale-110 shadow-amber-500/50 ring-2 ring-amber-400/50' 
             : 'hover:scale-110'
         } ${isLongPress ? 'animate-pulse' : ''}`}
       >
@@ -202,11 +239,11 @@ export default function ChatWidget() {
             <span className={`text-2xl ${isDragging ? 'animate-spin' : 'animate-bounce'}`}>
               {isDragging ? '�' : '�🐱'}
             </span>
-            <Heart className="h-3 w-3 text-pink-300 absolute -top-1 -right-1 animate-pulse" />
+            <Heart className="h-3 w-3 text-amber-300 absolute -top-1 -right-1 animate-pulse" />
             {/* 拖拽提示 */}
             {(showDragTip || (isLongPress && !isDragging)) && (
               <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap animate-fade-in">
-                {isLongPress ? '拖拽移动喵~ 🐾' : '长按可拖拽喵~ 🐱'}
+                {isLongPress ? '拖拽移动汪~ 🐾' : '长按可拖拽汪~ �'}
               </div>
             )}
           </div>
@@ -225,8 +262,8 @@ export default function ChatWidget() {
           {/* 头部 */}
           <div className="p-4 border-b border-white/10">
             <h3 className="font-medium text-white flex items-center gap-2">
-              <span className="text-lg">🐱</span>
-              <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">AI 猫猫助手</span>
+              <span className="text-lg">�</span>
+              <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Cici AI助手</span>
               <span className="text-sm">💕</span>
             </h3>
           </div>
@@ -255,14 +292,14 @@ export default function ChatWidget() {
               </div>
             ))}
             
-            {/* 可爱猫猫加载状态 */}
+            {/* 可爱 Cici 加载状态 */}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gradient-to-r from-pink-100/10 to-purple-100/10 text-gray-200 border border-pink-300/20 rounded-2xl px-4 py-2">
+                <div className="bg-gradient-to-r from-amber-100/10 to-orange-100/10 text-gray-200 border border-amber-300/20 rounded-2xl px-4 py-2">
                   <div className="flex items-center gap-2">
                     <div className="flex space-x-1">
                       <span className="animate-bounce text-lg">🐾</span>
-                      <span className="animate-bounce text-lg" style={{animationDelay: '0.2s'}}>🐱</span>
+                      <span className="animate-bounce text-lg" style={{animationDelay: '0.2s'}}>�</span>
                       <span className="animate-bounce text-lg" style={{animationDelay: '0.4s'}}>💭</span>
                     </div>
                     <span className="text-xs text-pink-300">猫猫正在思考喵~</span>
