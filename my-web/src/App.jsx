@@ -153,10 +153,10 @@ const Hero = () => (
           transition={{ duration: 0.6 }}
           className="text-4xl sm:text-5xl font-extrabold tracking-tight"
         >
-          打造你的小而美网站，从这里开始
+          CiCi的工作室
         </motion.h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          一页式现代落地页模板，含功能展示、案例画廊、价格方案和联系表单。基于 React + Tailwind + shadcn/ui，开箱即用、易于二次开发。
+          早上不吃饭的狗子不是好助手。这里是Cici的工作室，解决你家狗狗的各种问题
         </p>
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
           <Button className="rounded-2xl inline-flex items-center gap-2" onClick={buttonActions.getStarted}>
@@ -210,23 +210,23 @@ const Features = () => (
         {[
           {
             icon: Sparkles,
-            title: "即刻上手",
-            desc: "清爽的代码结构与风格指南，快速定制你的品牌语气。",
+            title: "吃饭不上厕所",
+            desc: "cici工作室让你的狗狗养成良好的习惯。",
           },
           {
             icon: Zap,
-            title: "性能优先",
-            desc: "按需渲染与轻量依赖，移动端同样流畅。",
+            title: "吃饭不喝水",
+            desc: "cici工作室让你的狗狗养成良好的习惯。",
           },
           {
             icon: Shield,
-            title: "可访问性",
-            desc: "语义化标记与对比度考虑，默认支持键盘导航。",
+            title: "不会吃饭",
+            desc: "cici工作室让你的狗狗养成良好的习惯。",
           },
           {
             icon: Mail,
             title: "联系表单",
-            desc: "内置基础表单，可无缝对接任意后端/无服务函数。",
+            desc: "cici工作室让你的狗狗养成良好的习惯。",
           },
           {
             icon: Check,
